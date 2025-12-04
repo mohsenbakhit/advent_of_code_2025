@@ -1,16 +1,20 @@
 import sys
 
 def max_joltage(bank: str) -> int:
-    cur_max = 0
-    left, right = 0, len(bank) - 1
-    while left <= right:
-        for i in range(left + 1, right + 1):
-            if int(bank[left] + bank[i]) > cur_max:
-                cur_max = int(bank[left] + bank[i])
-
-                
-        left += 1
-    return cur_max
+    result = []
+    start = 0
+    
+    for pos in range(12):
+        remaining = 11 - pos
+        end = len(bank) - remaining
+        
+        max_digit = max(bank[start:end])
+        max_idx = bank.index(max_digit, start, end)
+        
+        result.append(max_digit)
+        start = max_idx + 1
+    
+    return int(''.join(result))
 
 if len(sys.argv) :
     filename = sys.argv[1]
